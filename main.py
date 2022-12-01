@@ -230,5 +230,6 @@ if __name__ == "__main__":
     # client = pymongo.MongoClient(connectionString, server_api=ServerApi('1'))
     # roomsenseDB = client["RoomSense"]
     MongoInterface = MongoDBInterface("mongodb+srv://RoomSense-be:RoomSense-be@roomsenseserverless.p2y6b.mongodb.net/?retryWrites=true&w=majority", "RoomSense")
-    ret = MongoInterface.insertAudioFile("./Audio1.wav")
+    # ret = MongoInterface.insertAudioFile("./Audio1.wav")
+    ret = MongoInterface.insertCameraFile("./Image1.jpeg")
     print(ret)
