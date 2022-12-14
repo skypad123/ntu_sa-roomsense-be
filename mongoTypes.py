@@ -57,8 +57,37 @@ class TSL2591Log:
             "sensor": self.sensor
         }
 
+class SDC30Log:
+    #relies on SDC30 Sensor (Humidity/Temp/C02 Sensor)
+    # data: {
+    # datetime: <python datetime>
+    # humidity: <float> (0-100)
+    # temperature: <float> (in celsius)
+    # ppm: <float> (in ppm)
+    # device: <string> (mac address of rpi)
+    # sensor: "SDC30"
+    # }
+
+    def __init__(self, datetime: datetime.datetime, ppm: float, humidity: float, temperature: float, device: str):
+        self.datetime = datetime
+        self.humidity = humidity
+        self.temperature = temperature 
+        self.ppm = ppm
+        self.device = device
+        self.sensor = "SDC30"
+    
+    def toDict(self):
+        return {
+            "datetime": self.datetime,
+            "humidity": self.humidity,
+            "temperature": self.temperature,
+            "ppm": self.ppm,
+            "device": self.device,
+            "sensor": self.sensor
+        }
+
 class S8Log:
-    #relies on S8 Sensor (Humidity Sensor)
+    #relies on S8 Sensor (Humidity Sensor)    
     # data: {
     # datetime: <python datetime>
     # ppm: <float> (in ppm)
@@ -75,7 +104,7 @@ class S8Log:
     def toDict(self):
         return {
             "datetime": self.datetime,
-            "ppm": self.temperature,
+            "ppm": self.ppm,
             "device": self.device,
             "sensor": self.sensor
         }
@@ -155,6 +184,25 @@ class MongoDBInterface:
         #     return (ret.inserted_ids)
         ret = collection.insert_one(data.toDict())
         return (ret.inserted_id)
+
+
+    def insertSDC30Log(self,collectionName:str,data:SDC30Log):
+        #relies on Seed SDC30 Sensor (Humidity Sensor)
+        # data: {
+        # datetime: <python datetime>
+        # humidity: <float> (0-100)
+        # temperature: <float> (in celsius)
+        # ppm: <float> (in ppm)
+        # device: <string> (mac address of rpi)
+        # sensor: "SDC30"
+        # }
+        collection = self.database[collectionName]
+        # if (type(data) is list): 
+        #     ret = collection.insert_many([x.toDict() for x in data])
+        #     return (ret.inserted_ids)
+        ret = collection.insert_one(data.toDict())
+        return (ret.inserted_id)
+
 
     def insertTSL2591Log(self,collectionName:str,data:TSL2591Log):    
         #relies on TSL2591 Sensor (Light Sensor)

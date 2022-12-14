@@ -4,6 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+pyserial = "*"
+pymongo = "*"
+ujson = "*"
+getmac = "*"
+scipy = "*"
+numpy = "*"
 
 [dev-packages]
 
