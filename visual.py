@@ -14,13 +14,13 @@ class VisualManager:
 
     def __init__(self, MongoDBInterface: mt.MongoDBInterface, filepath):
         self.filepath = filepath
-        self.MongoInterface = MongoDBInterface 
+        self.MongoInterface = MongoDBInterface
+        self.camera =PiCamera() 
 
     def capture_visual(self):
-        camera = PiCamera()
         #time.sleep(1)
 
-        camera.capture(self.filepath)
+        self.camera.capture(self.filepath)
 
         print("Done")
 
