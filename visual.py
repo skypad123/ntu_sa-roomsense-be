@@ -79,6 +79,7 @@ class VisualManager:
         self.capture_visual()
         mongoTag = self._upload_file_mongodb()
         generatedData = self.analyse_visual()
+        print(mongoTag)
         visualMeta = mt.CameraLog(datetime.datetime.now(),generatedData["personCount"],mongoTag,str(gma()))
         self._upload_metadata_mongodb(visualMeta)
 
@@ -87,5 +88,5 @@ if __name__ == "__main__":
     mongoInterface = mt.MongoDBInterface("mongodb+srv://RoomSense-be:RoomSense-be@roomsenseserverless.p2y6b.mongodb.net/?retryWrites=true&w=majority", "RoomSense")
     visualManager = VisualManager(mongoInterface, "output.jpg")
     while(True):
-        if datetime.datetime.now() - datetime.timedelta(minutes=2) > datetime.datetime.now():
+        if datetime.datetime.now() - datetime.timedelta(minutes=1) > datetime.datetime.now():
              visualManager.visual_process()
