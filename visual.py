@@ -85,6 +85,15 @@ class VisualManager:
         visualMeta = mt.CameraLog(datetime.datetime.now(),generatedData["personCount"],mongoTag,str(gma()))
         self._upload_metadata_mongodb(visualMeta)
 
+def run_process():
+    mongoInterface = mt.MongoDBInterface("mongodb+srv://RoomSense-be:RoomSense-be@roomsenseserverless.p2y6b.mongodb.net/?retryWrites=true&w=majority", "RoomSense")
+    visualManager = VisualManager(mongoInterface, "output.jpg")
+    currenttime = datetime.datetime.now()
+    while(True):
+        if datetime.datetime.now() - datetime.timedelta(minutes=1) > currenttime:
+            visualManager.visual_process()
+            currenttime = datetime.datetime.now() 
+
 
 if __name__ == "__main__":
     mongoInterface = mt.MongoDBInterface("mongodb+srv://RoomSense-be:RoomSense-be@roomsenseserverless.p2y6b.mongodb.net/?retryWrites=true&w=majority", "RoomSense")
@@ -94,3 +103,6 @@ if __name__ == "__main__":
         if datetime.datetime.now() - datetime.timedelta(minutes=1) > currenttime:
             visualManager.visual_process()
             currenttime = datetime.datetime.now() 
+
+
+

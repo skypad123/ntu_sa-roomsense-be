@@ -81,6 +81,15 @@ class AudioManager:
         self.upload_metadata_mongodb(audioMeta)
 
 
+def run_process():
+    mongoInterface = mt.MongoDBInterface("mongodb+srv://RoomSense-be:RoomSense-be@roomsenseserverless.p2y6b.mongodb.net/?retryWrites=true&w=majority", "RoomSense")
+    audioManager = AudioManager(mongoInterface, "output.wav")
+    currenttime = datetime.datetime.now()
+    while(True):
+        if datetime.datetime.now() - datetime.timedelta(minutes=1) > currenttime:
+            audioManager.audio_process()
+            currenttime = datetime.datetime.now()  
+
 if __name__ == "__main__":
     mongoInterface = mt.MongoDBInterface("mongodb+srv://RoomSense-be:RoomSense-be@roomsenseserverless.p2y6b.mongodb.net/?retryWrites=true&w=majority", "RoomSense")
     audioManager = AudioManager(mongoInterface, "output.wav")
