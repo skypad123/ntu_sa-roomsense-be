@@ -16,9 +16,9 @@ RECORD_SECONDS = 5
 
 class AudioManager:
 
-    def __init__(self, MongoDBInterfece: mt.MongoDBInterface, filepath:str):
+    def __init__(self, MongoDBInterface: mt.MongoDBInterface, filepath:str):
         self.filepath = filepath
-        self.MongoInterface = mt.MongoDBInterface 
+        self.MongoInterface = MongoDBInterface
 
     def record_audio(self):
         p = pyaudio.PyAudio()
