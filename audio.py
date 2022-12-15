@@ -16,7 +16,7 @@ RECORD_SECONDS = 5
 
 class AudioManager:
 
-    def __init__(self, MongoDBInterfece: mt.MongoDBInterface, filepath):
+    def __init__(self, MongoDBInterfece: mt.MongoDBInterface, filepath:str):
         self.filepath = filepath
         self.MongoInterface = mt.MongoDBInterface 
 
@@ -64,19 +64,19 @@ class AudioManager:
         data["averageDecibel"] = np.mean(dbs)
         return data
 
-    def _upload_file_mongodb(self)-> any:
+    def upload_file_mongodb(self)-> any:
         return mt.MongoDBInterface.insertAudioFile(self.MongoInterface,self.filepath)
 
-    def _upload_metadata_mongodb(self,AudioData: mt.AudioLog )->any:
+    def upload_metadata_mongodb(self,AudioData: mt.AudioLog )->any:
         return mt.MongoDBInterface.insertAudioLog(self.MongoInterface,"Audio", AudioData)
     
     def audio_process(self):
         self.record_audio()
-        mongoTag = self._upload_file_mongodb()
+        mongoTag = self.upload_file_mongodb()
         generatedData = self.analyse_audio()
         print(mongoTag)
         audioMeta = mt.AudioLog(datetime.datetime.now(),generatedData["averageDecibel"],mongoTag,str(gma()))
-        self._upload_metadata_mongodb(audioMeta)
+        self.upload_metadata_mongodb(audioMeta)
 
 
 if __name__ == "__main__":
