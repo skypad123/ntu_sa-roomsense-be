@@ -72,9 +72,9 @@ class AudioManager:
         return self.MongoInterface.insertAudioLog("Audio", AudioData)
     
     def audio_process(self):
-        self.record_audio();
-        mongoTag = self._upload_file_mongodb();
-        generatedData = self.analyse_audio();
+        self.record_audio()
+        mongoTag = self._upload_file_mongodb()
+        generatedData = self.analyse_audio()
         print(mongoTag)
         audioMeta = mt.AudioLog(datetime.datetime.now(),generatedData["averageDecibel"],mongoTag,str(gma()))
         self._upload_metadata_mongodb(audioMeta)
@@ -83,6 +83,8 @@ class AudioManager:
 if __name__ == "__main__":
     mongoInterface = mt.MongoDBInterface("mongodb+srv://RoomSense-be:RoomSense-be@roomsenseserverless.p2y6b.mongodb.net/?retryWrites=true&w=majority", "RoomSense")
     audioManager = AudioManager(mongoInterface, "output.wav")
+    currenttime = datetime.datetime.now()
     while(True):
-        if datetime.datetime.now() - datetime.timedelta(minutes=1) > datetime.datetime.now():
-             audioManager.audio_process()
+        if datetime.datetime.now() - datetime.timedelta(minutes=1) > currenttime:
+            audioManager.audio_process()
+            currenttime = datetime.datetime.now() 

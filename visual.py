@@ -87,6 +87,8 @@ class VisualManager:
 if __name__ == "__main__":
     mongoInterface = mt.MongoDBInterface("mongodb+srv://RoomSense-be:RoomSense-be@roomsenseserverless.p2y6b.mongodb.net/?retryWrites=true&w=majority", "RoomSense")
     visualManager = VisualManager(mongoInterface, "output.jpg")
+    currenttime = datetime.datetime.now()
     while(True):
         if datetime.datetime.now() - datetime.timedelta(minutes=1) > datetime.datetime.now():
-             visualManager.visual_process()
+            visualManager.visual_process()
+            currenttime = datetime.datetime.now() 
