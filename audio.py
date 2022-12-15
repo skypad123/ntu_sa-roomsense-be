@@ -19,12 +19,12 @@ class AudioManager:
     def __init__(self, MongoDBInterface: mt.MongoDBInterface, filepath:str):
         self.filepath = filepath
         self.MongoInterface = MongoDBInterface
-        self.pyaudio = pyaudio.PyAudio() 
 
     def record_audio(self):
         
+        p = pyaudio.PyAudio()
 
-        stream = self.pyaudio.open(format=FORMAT,
+        stream = p.open(format=FORMAT,
                         channels=CHANNELS,
                         rate=RATE,
                         input=True,
@@ -42,11 +42,11 @@ class AudioManager:
 
         stream.stop_stream()
         stream.close()
-        self.pyaudio.terminate()
+        p.terminate()
 
         wf = wave.open(self.filepath, 'wb')
         wf.setnchannels(CHANNELS)
-        wf.setsampwidth(self.pyaudio.get_sample_size(FORMAT))
+        wf.setsampwidth(p.get_sample_size(FORMAT))
         wf.setframerate(RATE)
         wf.writeframes(b''.join(frames))
         wf.close()
