@@ -11,9 +11,9 @@ from getmac import get_mac_address as gma
 
 class VisualManager:
 
-    def __init__(self, MongoDBInterfece: mt.MongoDBInterface, filepath):
+    def __init__(self, MongoDBInterface: mt.MongoDBInterface, filepath):
         self.filepath = filepath
-        self.MongoInterface = mt.MongoDBInterface 
+        self.MongoInterface = MongoDBInterface 
 
     def capture_visual(self):
         camera = PiCamera()
