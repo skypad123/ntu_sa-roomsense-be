@@ -89,6 +89,6 @@ if __name__ == "__main__":
     visualManager = VisualManager(mongoInterface, "output.jpg")
     currenttime = datetime.datetime.now()
     while(True):
-        if datetime.datetime.now() - datetime.timedelta(minutes=1) > datetime.datetime.now():
+        if datetime.datetime.now() - datetime.timedelta(minutes=1) > currenttime:
             visualManager.visual_process()
             currenttime = datetime.datetime.now() 
