@@ -62,6 +62,7 @@ class AudioManager:
         chunks = np.array_split(wavdata, wavdata.size/(samprate/2))
         dbs = [20*np.log10(np.mean(chunk**2)) for chunk in chunks]
         data = dict()
+        print(dbs)
         data["averageDecibel"] = np.mean(dbs)
         return data
 
