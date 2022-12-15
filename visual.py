@@ -70,7 +70,8 @@ class VisualManager:
 
 
     def _upload_file_mongodb(self)-> any:
-        return self.MongoInterface.insertCameraFile(self.filepath)
+        filepath = self.filepath
+        return self.MongoInterface.insertCameraFile(filepath)
 
     def _upload_metadata_mongodb(self,VisualData: mt.CameraLog )->any:
         return self.MongoInterface.insertCameraLog("Image", VisualData)
