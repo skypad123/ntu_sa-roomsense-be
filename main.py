@@ -16,10 +16,10 @@ def connect(host='http://google.com'):
 
 if __name__ == "__main__":
     mp.set_start_method('spawn')
-    
+
     while (not connect()):
-        print("not connected, waiting 1000 ms for connection.")
-        sleep(1000)
+        print("not connected, waiting 10s for connection.")
+        sleep(10)
     
     audioP = Process(target=audio.run_process)
     visualP = Process(target=visual.run_process)
