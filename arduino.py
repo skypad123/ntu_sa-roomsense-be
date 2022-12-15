@@ -17,7 +17,7 @@ def print_ports():
 
 if __name__ == "__main__":
     ports = print_ports()
-    path, desc, hwid  = ports[-1]
+    path, desc, hwid  = ports[0]
     ser = serial.Serial(path, 115200, timeout=1)
 
     MongoInterface = mt.MongoDBInterface("mongodb+srv://RoomSense-be:RoomSense-be@roomsenseserverless.p2y6b.mongodb.net/?retryWrites=true&w=majority", "RoomSense")

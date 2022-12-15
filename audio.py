@@ -19,11 +19,12 @@ class AudioManager:
     def __init__(self, MongoDBInterface: mt.MongoDBInterface, filepath:str):
         self.filepath = filepath
         self.MongoInterface = MongoDBInterface
+        self.pyaudio = pyaudio.PyAudio() 
 
     def record_audio(self):
-        p = pyaudio.PyAudio()
+        
 
-        stream = p.open(format=FORMAT,
+        stream = self.pyaudio.open(format=FORMAT,
                         channels=CHANNELS,
                         rate=RATE,
                         input=True,
@@ -41,7 +42,7 @@ class AudioManager:
 
         stream.stop_stream()
         stream.close()
-        p.terminate()
+        self.pyaudio.terminate()
 
         wf = wave.open(self.filepath, 'wb')
         wf.setnchannels(CHANNELS)
@@ -53,7 +54,7 @@ class AudioManager:
 
     def analyse_audio(self) -> dict:
         #reading program root file for output
-        samprate, wavdata = read(self.filepath)
+        samprate, wavdata = read("./" + self.filepath)
 
         # basically taking a reading every half a second - the size of the data 
         # divided by the sample rate gives us 1 second chunks 
