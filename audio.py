@@ -64,13 +64,11 @@ class AudioManager:
         data["averageDecibel"] = np.mean(dbs)
         return data
 
-
     def _upload_file_mongodb(self)-> any:
-        filepath = self.filepath
-        return self.MongoInterface.insertAudioFile(filepath=("./"+filepath))
+        return mt.MongoDBInterface.insertAudioFile(self.MongoInterface,self.filepath)
 
     def _upload_metadata_mongodb(self,AudioData: mt.AudioLog )->any:
-        return self.MongoInterface.insertAudioLog("Audio", AudioData)
+        return mt.MongoDBInterface.insertAudioLog(self.MongoInterface,"Audio", AudioData)
     
     def audio_process(self):
         self.record_audio()
