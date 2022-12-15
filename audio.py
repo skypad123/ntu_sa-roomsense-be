@@ -65,10 +65,10 @@ class AudioManager:
         return data
 
     def upload_file_mongodb(self)-> any:
-        return mt.MongoDBInterface.insertAudioFile(self.MongoInterface,self.filepath)
+        return self.MongoInterface.insertAudioFile(self.filepath)
 
     def upload_metadata_mongodb(self,AudioData: mt.AudioLog )->any:
-        return mt.MongoDBInterface.insertAudioLog(self.MongoInterface,"Audio", AudioData)
+        return self.MongoInterface.insertAudioLog("Audio", AudioData)
     
     def audio_process(self):
         self.record_audio()
