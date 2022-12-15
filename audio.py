@@ -84,6 +84,6 @@ if __name__ == "__main__":
     audioManager = AudioManager(mongoInterface, "output.wav")
     currenttime = datetime.datetime.now()
     while(True):
-        if datetime.datetime.now() - datetime.timedelta(minutes=1) > currenttime:
+        if datetime.datetime.now() - datetime.timedelta(seconds=1) > currenttime:
             audioManager.audio_process()
             currenttime = datetime.datetime.now() 
