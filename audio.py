@@ -46,7 +46,7 @@ class AudioManager:
 
         wf = wave.open(self.filepath, 'wb')
         wf.setnchannels(CHANNELS)
-        wf.setsampwidth(p.get_sample_size(FORMAT))
+        wf.setsampwidth(self.pyaudio.get_sample_size(FORMAT))
         wf.setframerate(RATE)
         wf.writeframes(b''.join(frames))
         wf.close()
