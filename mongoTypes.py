@@ -153,7 +153,29 @@ class AudioLog:
     def toDict(self):
         return {
             "datetime": self.datetime,
-            "averageDecible": self.averageDecibel,
+            "averageDecibel": self.averageDecibel,
+            "device": self.device,
+            "objectId": self.objectId,
+            "sensor": self.sensor
+        }
+class ClipLog:
+    # relies on Clip Data
+    # data: {
+    # datetime: <python datetime>
+    # device: <string> (mac address of rpi)
+    # sensor: "action"
+    # objectId: <mongo ObjectId>
+    # }
+    def __init__(self, datetime: datetime.datetime, averageDecibel: float, objectId: str, device: str):
+        self.datetime = datetime
+        self.averageDecibel = averageDecibel
+        self.device = device
+        self.objectId = objectId
+        self.sensor = "action"
+    
+    def toDict(self):
+        return {
+            "datetime": self.datetime,
             "device": self.device,
             "objectId": self.objectId,
             "sensor": self.sensor
@@ -253,6 +275,18 @@ class MongoDBInterface:
         collection = self.database[collectionName]
         ret = collection.insert_one(data.toDict())
         return (ret.inserted_id)
+    
+    def insertClipLog(self,collectionName:str,data:AudioLog):
+            #relies on Video Data
+            # data: {
+            # datetime: <python datetime>
+            # device: <string> (mac address of rpi)
+            # sensor: "clip"
+            # objectId: <mongo ObjectId>
+            # }
+        collection = self.database[collectionName]
+        ret = collection.insert_one(data.toDict())
+        return (ret.inserted_id)
 
     def insertAudioFile(self,filepath:str):
         stringSplit = filepath.split("/")
@@ -272,6 +306,14 @@ class MongoDBInterface:
         ret = fs.put(data, filename = stringSplit[-1])
         return ret
 
+    def insertClipFile(self,filepath:str):
+        stringSplit = filepath.split("/")
+        clientGridfs = self.client.grid_file
+        fileItem = open(filepath,"rb")
+        data = fileItem.read()
+        fs = gridfs.GridFS(clientGridfs)
+        ret = fs.put(data, filename = stringSplit[-1])
+        return ret
 
 if __name__ == "__main__":
     # connectionString = "mongodb+srv://RoomSense-be:xNT7ddS0RT3ksGvr@roomsenseserverless.p2y6b.mongodb.net/?retryWrites=true&w=majority"
